@@ -47,6 +47,8 @@ function TopBar() {
 	const [onlinePath, setOnlinePath] = useAtom(ONLINE_PATH);
 	const [sort, setSort] = useAtom(SORT);
 	const [popoverOpen, setPopoverOpen] = useState(false);
+	const [onlinePopoverOpen, setOnlinePopoverOpen] = useState(false);
+	const [genericSort, setGenericSort] = useState("A");
 	const [search, setSearch] = useAtom(SEARCH);
 	const [term, setTerm] = useState("");
 	const textData = useAtomValue(TEXT_DATA);
@@ -255,6 +257,34 @@ function TopBar() {
 					</Popover>
 				}
 			</div>
+			{online && (
+				<div className="data-wuwa:bg-sidebar data-wuwa:min-w-32 min-w-28 data-wuwa:border h-full bg-transparent border-0 rounded-lg">
+					{
+						<Popover open={onlinePopoverOpen} onOpenChange={setOnlinePopoverOpen}>
+							<PopoverTrigger asChild>
+								<div className="min-w-fit button-like zzz-border hover:brightness-150 bg-sidebar cursor-pointerx flex items-center justify-center text-center h-full gap-1 p-2 text-xs duration-300 rounded-md select-none">
+									{genericSort}
+								</div>
+							</PopoverTrigger>
+							<PopoverContent className="data-wuwa:bg-sidebar game-font z-100 data-wuwa:w-32 w-32 data-wuwa:border absolute p-2 my-2 mr-2 -ml-16 bg-sidebar border bgpattern rounded-lg">
+								<div className="data-wuwa:gap-0 flex flex-col gap-2" onClick={() => setOnlinePopoverOpen(false)}>
+									{["A", "B", "C"].map((value) => (
+										<div
+											key={value}
+											className="hover:brightness-150 button-like data-zzz:bg-button zzz-border bg-sidebar min-h-12 cursor-pointerx flex items-center justify-center text-center w-full gap-1 p-2 text-sm duration-300 rounded-md select-none"
+											onClick={() => {
+												setGenericSort(value);
+											}}
+										>
+											{value}
+										</div>
+									))}
+								</div>
+							</PopoverContent>
+						</Popover>
+					}
+				</div>
+			)}
 			<Notice />
 			<Button
 				id="refresh-btn"
